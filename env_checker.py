@@ -15,9 +15,9 @@ def get_env_var(var_name):
 
 
 def find_var(env_var_name, flag_name=None):
-    if not flag_name:
+    if flag_name:
         for item in sys.argv:
             if item.startswith(flag_name):
-                return item.replace(flag_name, "")
+                return item.replace(flag_name + "=", "")
     if env_var_name:
         return os.getenv(env_var_name)
