@@ -1,0 +1,182 @@
+[
+  {
+    "title": "Login Functionality Not Working for New Users",
+    "descr": "Users created after May 25th, 2024 are unable to log in. Error message: 'Invalid Credentials.' (Priority: High)"
+  },
+  {
+    "title": "Mobile App Crashing on Product Page Load",
+    "descr": "App crashes consistently on Android devices (version 11+) when trying to access the product page. (Priority: High)"
+  },
+  {
+    "title": "Implement Unit Tests for User Registration Flow",
+    "descr": "Currently, no unit tests exist for the user registration process. Add unit tests to ensure proper functionality. (Priority: Medium)"
+  },
+  {
+    "title": "Update Documentation for API v2.0 Release",
+    "descr": "Update API documentation to reflect changes introduced in version 2.0. (Priority: Medium)"
+  },
+  {
+    "title": "Investigate Performance Issues on Search Functionality",
+    "descr": "Search functionality experiencing slow response times for queries with more than 10 keywords. (Priority: Medium)"
+  },
+  {
+    "title": "Implement Feature: User Two-Factor Authentication (2FA)",
+    "descr": "Add functionality for users to enable two-factor authentication for their accounts. (Priority: Low)"
+  },
+  {
+    "title": "Fix Broken Link in Admin Dashboard",
+    "descr": "Link labeled 'View User Activity' in the admin dashboard is not functioning. (Priority: Low)"
+  },
+  {
+    "title": "Update Error Messages for Payment Processing Failure",
+    "descr": "Improve error messages displayed during payment processing failures to provide users with more specific information about the issue. (Priority: Medium)"
+  },
+  {
+    "title": "Investigate Memory Leak in Core Application Service",
+    "descr": "Memory usage is increasing steadily over time, potentially indicating a memory leak. (Priority: High)"
+  },
+  {
+    "title": "Design Review: New User Onboarding Process",
+    "descr": "Conduct a design review for the proposed new user onboarding process. (Priority: Medium)"
+  },
+  {
+    "title": "Update Code Style Guidelines for Improved Readability",
+    "descr": "Review and update code style guidelines to ensure consistency and readability across the codebase.  (Priority: Low)"
+  },
+  {
+    "title": "Implement Automated Testing for Regression Prevention",
+    "descr": "Set up automated testing suite to prevent regressions during future deployments. (Priority: Medium)"
+  },
+  {
+    "title": "Fix Visual Bug: Inconsistent Button Spacing on Product Listing Page",
+    "descr": "Buttons on the product listing page have inconsistent spacing, creating a misaligned layout on some screen sizes. (Priority: Low)"
+  },
+  {
+    "title": "Investigate Security Vulnerabilities in Third-Party Library",
+    "descr": "Recent security reports indicate potential vulnerabilities in a third-party library used in the project. Investigate and take necessary actions. (Priority: High)"
+  },
+  {
+    "title": "Update Database Schema for New Feature Implementation",
+    "descr": "Update database schema to accommodate the upcoming Product Reviews feature. (Priority: Medium)"
+  },
+  {
+    "title": "Update CI/CD Pipeline for Faster Deployment (Priority: Medium)",
+    "descr": "The current CI/CD pipeline is taking too long to deploy new code changes. Investigate ways to optimize the pipeline for faster deployments."
+  },
+  {
+    "title": "Investigate Compatibility Issues with New Browser Version (Priority: Medium)",
+    "descr": "The recent release of a new browser version (e.g., Chrome 110) is causing compatibility issues with our web application. Identify and fix any bugs related to the new browser version."
+  },
+  {
+    "title": "Implement Feature: User Search Functionality (Priority: Medium)",
+    "descr": "Implement a search functionality that allows users to search for other users based on various criteria (e.g., username, email address)."
+  },
+  {
+    "title": "Fix Broken Image in Knowledge Base Article (Priority: Low)",
+    "descr": "A broken image is present in a knowledge base article, hindering the user experience. Fix the image or replace it with a relevant one."
+  },
+  {
+    "title": "Review Third-Party Library Licenses for Compliance (Priority: Low)",
+    "descr": "Review the licenses of all third-party libraries used in the project to ensure compliance with their terms of use."
+  },
+  {
+    "title": "Improve Logging for Debugging Critical System Errors (Priority: Medium)",
+    "descr": "Improve logging mechanisms for critical system errors to provide more detailed information for debugging purposes."
+  },
+  {
+    "title": "Conduct Performance Testing for High Traffic Scenarios (Priority: Medium)",
+    "descr": "Conduct performance testing to simulate high traffic scenarios and identify any potential bottlenecks in the system."
+  },
+  {
+    "title": "Add Automated Backups for Disaster Recovery (Priority: Medium)",
+    "descr": "Implement a system for automated backups to ensure data recovery in case of system failures or disasters."
+  },
+  {
+    "title": "Update External API Integration for Latest Version (Priority: Medium)",
+    "descr": "Update the integration with an external API to ensure compatibility with the latest version of the API."
+  },
+  {
+    "title": "Fix Minor UI Bug: Button Hover Effect Not Working (Priority: Low)",
+    "descr": "The hover effect for a button is not working as intended. Fix the bug to restore the expected user interaction."
+  },
+  {
+    "title": "Implement A/B Testing for New Landing Page Design (Priority: Medium)",
+    "descr": "Implement A/B testing to compare the performance of two different landing page designs and determine which one leads to better user engagement."
+  },
+  {
+    "title": "Improve Documentation for Internal APIs (Priority: Medium)",
+    "descr": "Improve the documentation for internal APIs used by developers within the team. Ensure the documentation is clear, concise, and up-to-date."
+  },
+  {
+    "title": "Fix Minor Bug: Incorrect Date Format Displayed on Reports (Priority: Low)",
+    "descr": "A minor bug is causing dates to be displayed in the wrong format on reports. Fix the bug to ensure accurate date representation."
+  },
+  {
+    "title": "Update User Onboarding Process for Improved Clarity (Priority: Medium)",
+    "descr": "Review and update the user onboarding process to improve clarity and guide new users through the initial setup steps more effectively."
+  },
+  {
+    "title": "Investigate Potential for Data Loss During User Account Deletion (Priority: High)",
+    "descr": "Investigate the potential for data loss during the process of deleting a user account. Identify and fix any issues to ensure data integrity."
+  },
+  {
+    "title": "Schedule System Maintenance for Database Upgrade (Priority: Medium)",
+    "descr": "Schedule a system maintenance window to perform a database upgrade. Ensure proper communication and minimize downtime for users."
+  },
+  {
+    "title": "Improve Mobile App Responsiveness for Different Devices (Priority: Medium)",
+    "descr": "The mobile app layout appears distorted or broken on certain devices. Ensure proper responsiveness of the app across different screen sizes and, device types."
+  },
+  {
+    "title": "Improve User Interface (UI) for Improved User Experience (UX) (Priority: Medium)",
+    "descr": "Improve the user interface (UI) to enhance the overall user experience (UX). This could involve refining the visual design, improving layout and navigation, or making interactions more intuitive."
+  },
+  {
+    "title": "Implement Feature: User-Defined Email Notifications (Priority: Medium)",
+    "descr": "Implement a feature that allows users to define the types of email notifications they receive from the system (e.g., order updates, account activity alerts)."
+  },
+  {
+    "title": "Update Third-Party Library to Address Security Patch (Priority: High)",
+    "descr": "Update a third-party library to the latest version to address a recently identified security patch. Address any breaking changes introduced in the new version."
+  },
+  {
+    "title": "Investigate Spikes in Server Resource Utilization (Priority: Medium)",
+    "descr": "Investigate spikes in server resource utilization that could be causing performance issues. Identify the root cause and implement solutions to optimize resource usage."
+  },
+  {
+    "title": "Conduct User Acceptance Testing (UAT) for New Feature Release (Priority: Medium)",
+    "descr": "Conduct user acceptance testing (UAT) with a group of representative users to validate the functionality and usability of a new feature before release."
+  },
+  {
+    "title": "Implement Feature: User-Generated Content Moderation Tools (Priority: Medium)",
+    "descr": "Implement tools to moderate user-generated content (UGC) on the platform, such as comments or reviews. This could involve filtering inappropriate content or allowing users to report violations."
+  },
+  {
+    "title": "Improve Scalability of System Infrastructure (Priority: Medium)",
+    "descr": "Improve the scalability of the system infrastructure to handle increased user traffic or data volume. This might involve adding additional servers or optimizing resource allocation."
+  },
+  {
+    "title": "Conduct Security Audit for Potential Vulnerabilities (Priority: High)",
+    "descr": "Conduct a security audit to identify potential vulnerabilities in the system that could be exploited by attackers. Address any high-risk vulnerabilities discovered during the audit."
+  },
+  {
+    "title": "Update Code for Compliance with New Coding Standards (Priority: Medium)",
+    "descr": "Update the codebase to comply with new coding standards adopted by the team or industry. This could involve refactoring code, adopting new coding conventions, or using specific code style guidelines."
+  },
+  {
+    "title": "Create Knowledge Base Articles for Common User Issues (Priority: Medium)",
+    "descr": "Create knowledge base articles that address common user issues and provide step-by-step instructions for resolving them. These articles can be a valuable self-service resource for users."
+  },
+  {
+    "title": "Update Security Best Practices for User Data Storage (Priority: High)",
+    "descr": "Our current practices for user data storage might not be aligned with the latest security best practices. Review and update data storage methods to ensure user data is protected."
+  },
+  {
+    "title": "Update Code Coverage Metrics for Improved Test Suite Efficiency (Priority: Medium)",
+    "descr": "Review the code coverage metrics of the current test suite. Look for areas with low coverage and add additional tests to improve overall test efficiency."
+  },
+  {
+    "title": "Conduct Code Review for Recently Merged Feature Branch (Priority: Medium)",
+    "descr": "A recently merged feature branch might contain bugs or unintended changes. Conduct a code review to identify any issues and ensure the code meets quality standards."
+  }
+]
