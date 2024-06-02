@@ -1,24 +1,35 @@
-import api
 import env_checker
-import data_loader
 import bulk_create
 import bulk_update
 import sys
-import json
-import random
-import time
+import ver
 from base64 import b64encode
 
-
 def render_help_main():
-    print("HELP TEXT")
+    print("JIRA CREATOR")
+    print("\nUsage: jcreate COMMAND")
+    print("\nCommon commands:")
     print("bulkcreate          Create many JIRA tickets")
+    print("bulkupdate          Update many JIRA tickets")
+    
+    print("\nTesting Commands:")
+    print("get-transitions     Get issue ids for a given project id")
+    
+    print("\nFor more help, go to https://github.com/wyattmunson/jira-creator")
 
 def bulk_create_handler():
     bulk_create.create_ticket_burst()
 
 def bulk_update_handler():
     bulk_update.bulk_update_orchestrator()
+
+def get_transition_handler():
+    bulk_update.get_transition_id_orchestrator()
+
+
+def get_version_handler():
+    ver.get_version()
+
 
 if __name__ == "__main__":
     print("Initial startup...")
@@ -36,6 +47,9 @@ if __name__ == "__main__":
             bulk_create_handler()
         if command == "bulkupdate":
             bulk_update_handler()
+        if command == "get-transitions":
+            get_transition_handler()
+        if command in ["version", "--version", "-v"]:
+            get_version_handler()
     else:
-        print("No args passed...")
         render_help_main()

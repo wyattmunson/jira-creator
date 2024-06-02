@@ -1,5 +1,6 @@
 import os
 import sys
+import logtastic as logg
 
 def check_env_vars(required_vars):
     missing_vars = [var for var in required_vars if not os.getenv(var)]
@@ -13,6 +14,12 @@ def check_env_vars(required_vars):
 def get_env_var(var_name):
     return os.getenv(var_name)
 
+
+def find_flag(flag_name):
+    for item in sys.argv:
+        if item.startswith(flag_name):
+            logg.logger(f"Found flag {flag_name}", "debug")
+            return item.replace(flag_name + "=", "")
 
 def find_var(env_var_name, flag_name=None):
     if flag_name:

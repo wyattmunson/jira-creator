@@ -24,12 +24,13 @@ class BulkUpdater:
         # ticket_list = api.get_issues('project = "FOX" AND status = "To Do" ORDER BY created DESC')
         self.tickets = ticket_list['issues']
     
-    def get_transition_ids(self):
+    def get_transition_ids(self, issue_key=env_checker.find_flag("--issue-key")):
         # get the first ticket (transition ids are subset of issue)
-        sample_ticket = self.tickets[0]
-        sample_ticket_key = sample_ticket['key']
+        if not issue_key:
+            sample_ticket = self.tickets[0]
+            issue_key = sample_ticket['key']
 
-        transition_ids = api.get_transitions(sample_ticket_key)
+        transition_ids = api.get_transitions(issue_key)
         self.transition_ids = transition_ids['transitions']
         print(self.transition_ids)
 
@@ -48,12 +49,12 @@ class BulkUpdater:
             print(f"\nStatus for {issue_key} is {status}")
 
             # randomly decide if it should be moved
-            roll = random.randint(0, 9)
-            if roll >= 5 and status != "Done":
-                print("Taking action...")
+            roll = random.randint(1, 100)
+            if roll >= 100 and status != "Done":
+                print(f"Transitioning {issue_key}...")
                 next_stage = transition_list[status]['next']
                 transition_id = transition_list[next_stage]['id']
-                print("Next ID is", transition_id)
+                print(f"Next status ID for {issue_key} is", transition_id)
 
                 api.do_transition(issue_key, transition_id)
 
@@ -71,8 +72,14 @@ class BulkUpdater:
         jql = ""
 
 
+def get_transition_id_orchestrator():
+    print("............Get transition ids............")
+    updater = BulkUpdater()
+    updater.get_transition_ids()
+    
+
 def bulk_update_orchestrator():
-    print("Prepping bulk update...")
+    print("............Bulk update............")
     updater = BulkUpdater()
     updater.startup()
 

@@ -3,6 +3,7 @@ class Configurator:
       self.up = True
       self.project_list = ["FOX"]
       # self.project_list = ["FOX", "NORTH", "RED"]
+      self.jira_api_url = "https://harness-sei.atlassian.net/rest/api/2/"
       self.project_configs = {
           'kaban_types': ["story, bug, epic, task, subtask"],
           'FOX': {
@@ -17,12 +18,17 @@ class Configurator:
                       {"id": "12", "name": "In Progress"},
                       {"id": "2", "name": "Testing"},
                       {"id": "31", "name": "Done"}
-                  ]
+                  ],
+                  'transition_list': {
+                        "To Do": {"id": "11", "name": "To Do", "next": "In Progress"},
+                        "In Progress": {"id": "21", "name": "In Progress", "next": "Testing"},
+                        "Testing": {"id": "2", "name": "Testing", "next": "Done"},
+                        "Done": {"id": "31", "name": "Done"}
+                    }
               },
               'epic_id': "10008",
               'task_id': "10006",
               'subtask_id': "10009"
-              
           },
           'NORTH': {
               'bug_id': "10012",
@@ -50,3 +56,6 @@ class Configurator:
     
     def get_project_list(self):
         return self.project_list
+    
+    def get_api_url(self):
+        return self.jira_api_url
