@@ -7,3 +7,6 @@ class Logtastic:
 
 def logger(message, type="info"):
     print(f"{type}: {message}")
+
+def er(type="INFO", message=""):
+    print(f"{type}: {message}")

@@ -9,6 +9,12 @@ class Configurator:
           'FOX': {
               'bug_id': "10007",
               'story_id': "10005",
+              'transition_list': {
+                   "To Do": {"id": "11", "name": "To Do", "next": "In Progress"},
+                   "In Progress": {"id": "21", "name": "In Progress", "next": "Testing"},
+                   "Testing": {"id": "2", "name": "Testing", "next": "Done"},
+                   "Done": {"id": "31", "name": "Done"}
+               },
               'story': {
                   'id': "10005",
                   'points': "customfield_10016",
@@ -48,6 +54,14 @@ class Configurator:
               'epic': {'id': "10000"},
               'task': {'id': "10010"},
               'subtask': {'id': "10011"},
+              'transition_list': {
+                  "Backlog": {"id": "14", "name": "Backlog", "next": "Selected for Development"},
+                  "Selected for Development": { 'id': "21", 'name': "Selected for Development", 'next': "In Progress"},
+                  "In Progress": { "id": "31", "name": "In Progress", "next": "QA"},
+                  "QA": { "id": "51", "name": "QA", "next": "QA"},
+                  "PM Approval": { "id": "61", "name": "PM Approval", "next": "Done"},
+                  "Done": { "id": "41", "name": "Done"},
+              }
           }
       }
     

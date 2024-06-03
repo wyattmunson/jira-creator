@@ -18,7 +18,8 @@ def render_help_main():
     print("\nFor more help, go to https://github.com/wyattmunson/jira-creator")
 
 def bulk_create_handler():
-    bulk_create.create_ticket_burst()
+    # bulk_create.create_ticket_burst()
+    bulk_create.bulk_create_orchestrator()
 
 def bulk_update_handler():
     bulk_update.bulk_update_orchestrator()

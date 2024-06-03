@@ -25,26 +25,33 @@ def assemble_payload(project_key, issue_id, summary="Created by script", descrip
     
     return payload
 
+
+def get_project_key(project_key, conf):
+    if not project_key:
+        project_list = conf.get_project_list()
+        project_key = random.choice(project_list)
+        print("Project key not set. Selecting random key:", project_key)
+    
+    return project_key
+
+
+def get_issue_type(issue_type, project_key, conf):
+    if not issue_type:
+        issue_type = "story"
+        print(f"Issue type not set, defaulting to {issue_type}")
+    return conf[project_key][issue_type]['id']
+
 def create_ticket_burst(tickets=data_loader.get_ticket_desc(), 
                         limit=env_checker.find_flag("--limit") or 5, 
                         project_key=env_checker.find_var("PROJECT_KEY", "--project-key"),
                         issue_type=env_checker.find_flag("--issue-type")):
     conf = Configurator()
     configs = conf.get_configs()
-    
     limit = int(limit)
 
-    # if project_key not specified, randomly select one
-    if not project_key:
-        project_list = conf.get_project_list()
-        project_key = random.choice(project_list)
-        print("Project key not set. Selecting random key:", project_key)
-    
-    # get issue id from issue type
-    if not issue_type:
-        issue_type = "story"
-        print(f"Issue type not set, defaulting to {issue_type}")
-    issue_id = configs[project_key][issue_type]['id']
+    # if project_key not specified, randomly select one; get issue id
+    project_key = (project_key, conf)
+    issue_id = (issue_type, project_key, configs)
     
     print(f"Project key: {project_key}, Issue type: {issue_type}, Issue Id: {issue_id}. Creating burst of tickets...")
 
@@ -60,4 +67,6 @@ def create_ticket_burst(tickets=data_loader.get_ticket_desc(),
 
 
 def bulk_create_orchestrator():
-    print("............Bulk create............")
+    print("............START: Bulk create............")
+    create_ticket_burst()
+    print("............END: Bulk create............")

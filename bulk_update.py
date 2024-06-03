@@ -4,6 +4,7 @@ import env_checker
 import api
 import data_loader
 import logtastic as logg
+from configurator import Configurator
 
 class BulkUpdater:
     def __init__(self) -> None:
@@ -19,13 +20,13 @@ class BulkUpdater:
 
     def get_tickets(self, jql_query):
         print("Getting tickets...")
+        # TODO: Update API to have dev mode to load mocks
         # ticket_list = data_loader.get_tickets()
         ticket_list = api.get_issues(jql_query)
-        # ticket_list = api.get_issues('project = "FOX" AND status = "To Do" ORDER BY created DESC')
         self.tickets = ticket_list['issues']
     
     def get_transition_ids(self, issue_key=env_checker.find_flag("--issue-key")):
-        # get the first ticket (transition ids are subset of issue)
+        # get the first ticket (all issues types in same project use common transition ids)
         if not issue_key:
             sample_ticket = self.tickets[0]
             issue_key = sample_ticket['key']
@@ -35,13 +36,14 @@ class BulkUpdater:
         print(self.transition_ids)
 
 
-    def process_transitions(self):
-        transition_list = {
-            "To Do": {"id": "11", "name": "To Do", "next": "In Progress"},
-            "In Progress": {"id": "21", "name": "In Progress", "next": "Testing"},
-            "Testing": {"id": "2", "name": "Testing", "next": "Done"},
-            "Done": {"id": "31", "name": "Done"}
-        }
+    def process_transitions(self, transition_list):
+        # percentage = int(env_checker.find_flag("--percentage"))
+        # if not percentage: percentage = 100
+        percentage = env_checker.find_flag("--percentage")
+        if not percentage: 
+            percentage = 100
+        else:
+            percentage = int(percentage)
 
         for item in self.tickets:
             status = item['fields']['status']['name']
@@ -50,7 +52,7 @@ class BulkUpdater:
 
             # randomly decide if it should be moved
             roll = random.randint(1, 100)
-            if roll >= 100 and status != "Done":
+            if roll >= percentage and status != "Done":
                 print(f"Transitioning {issue_key}...")
                 next_stage = transition_list[status]['next']
                 transition_id = transition_list[next_stage]['id']
@@ -72,6 +74,14 @@ class BulkUpdater:
         jql = ""
 
 
+def get_jql_query(jira_project):
+    input_jql = env_checker.find_flag("--jql")
+    if not input_jql:
+        return f'project = "{jira_project}" AND status != "Done" ORDER BY created DESC'
+        # return f'project = "{jira_project}" AND status = "To Do" ORDER BY created DESC'
+    else:
+        return input_jql
+
 def get_transition_id_orchestrator():
     print("............Get transition ids............")
     updater = BulkUpdater()
@@ -82,15 +92,19 @@ def bulk_update_orchestrator():
     print("............Bulk update............")
     updater = BulkUpdater()
     updater.startup()
+    config = Configurator()
+    transition_list = config.get_configs()
 
     # Get target project (or select random one)
     jira_project = updater.get_project_key()
     print("Using JIRA project", jira_project)
 
-    jql_query = f'project = "{jira_project}" AND status = "To Do" ORDER BY created DESC'
+    # jql_query = f'project = "{jira_project}" AND status = "To Do" ORDER BY created DESC'
+    jql_query = get_jql_query(jira_project)
+    
     # 1. Get all-ish tickets and update a random subet
     # TODO: add a way to easy target only to do tickets or update all, ect. 
     ticket_list = updater.get_tickets(jql_query)
     # transitions_ids = updater.get_transition_ids()
-    updater.process_transitions()
+    updater.process_transitions(transition_list[jira_project]['transition_list'])
     

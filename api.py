@@ -1,6 +1,7 @@
 from base64 import b64encode
 import requests
 import env_checker
+import logtastic as logg
 
 def assemble_header():
     username = env_checker.get_env_var("JIRA_USERNAME")
@@ -16,6 +17,7 @@ def make_post_call(url, payload):
     headers = assemble_header()
 
     try:
+        logg.er("DEBUG", f"JSON payload: \n{payload}")
         response = requests.post(url, headers=headers, json=payload)
         print("API status code:", response.status_code)
         
@@ -37,10 +39,10 @@ def make_post_call(url, payload):
     #     return None
 
 
-def make_get_call(url):
+def make_get_call(url, params=None):
     headers = assemble_header()
 
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=headers, params=params)
 
     if response.status_code in [200, 201]:
         print("Api call successful.")
@@ -50,10 +52,14 @@ def make_get_call(url):
         return None
 
 def get_issues(jql=None, max_results=50):
-    url = "https://harness-sei.atlassian.net/rest/api/2/search?"
-    total_url = url + jql + f"&maxResults={max_results}"
+    url = "https://harness-sei.atlassian.net/rest/api/2/search"
+    q_params = {
+        'maxResults': max_results,
+    }
+    if jql: q_params['jql'] = jql
+    
 
-    res = make_get_call(total_url)
+    res = make_get_call(url, q_params)
     return res
     # response = requests.get(url, headers=headers)
 
