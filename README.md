@@ -109,8 +109,11 @@ Take a Jira issue, create commits, open PR
 Arguments:
 
 - `--project-key` - Jira Project to target. If omitted, commits will not be associated with a Jira ticket.
-- `--repo_location` - Location of target git repo to make changes to.
+- `--repo-location` - Location of target git repo to make changes to.
 - `--total-commits` - Number of commits to make
+- `--clone-url` - HTTP clone URL of repo
+- `--git-username` - Username in remote git repo SaaS service
+- `--code-pat` - Personal Access Token for SaaS git service
 
 | Flag                               | Env Var | Descr                                                                                  |
 | ---------------------------------- | ------- | -------------------------------------------------------------------------------------- |
