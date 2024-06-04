@@ -88,3 +88,41 @@ Arguments
 - `--limit` - Total number of tickets to select as candidates to be transitioned.
 - `--jql` - JQL expression to use to select tickets.
 - `--percentage` - An integer `1` to `100`. Percentage of tickets to move.
+
+### `workflow`
+
+- `workflow move-ticket` - Get ticket in Ready for Dev --> assign to dev if necessary --> transition to In Progress
+- `workflow commits` - Get ticket in In Progress -> Create and backdate commits --> Push commits to remote git repo
+  - Random chance to not take a JIRA ticket
+
+#### `workflow move-ticket`
+
+Move a JIRA ticket from to do/backlog to In progress state
+
+#### `workflow commits`
+
+Take a Jira issue, create commits, open PR
+
+- Random chance to not move a ticket
+- Random chance to not reference Jira Id in commit messages
+
+Arguments:
+
+- `--project-key` - Jira Project to target. If omitted, commits will not be associated with a Jira ticket.
+- `--repo_location` - Location of target git repo to make changes to.
+- `--total-commits` - Number of commits to make
+
+| Flag                               | Env Var | Descr                                                                                  |
+| ---------------------------------- | ------- | -------------------------------------------------------------------------------------- |
+| `--project-key`, `PROJECT_KEY`     | ""      | Jira Project to target. If omitted, commits will not be associated with a Jira ticket. |
+| `--repo_location`, `REPO_LOCATION` | ""      | Location of target git repo to make changes to.                                        |
+| `--total-commits`, `TOTAL_COMMITS` | ""      | Number of commits to make                                                              |
+| `--percent-jira`, `PERCENT_JIRA`   | 95      | Percent chance a Jira ticket will be associated with the commits.                      |
+
+Logic:
+
+1. Grab a Jira issue from the given project. Random chance to not grab a Jira ticket.
+1. Get commit times
+   1. Get Jira issue start time.
+   1. Randomly generate times between Jira create date and current time. Sort times.
+   1. Loop through commits and update commit time with timestamp array.

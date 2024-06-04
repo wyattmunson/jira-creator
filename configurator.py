@@ -38,14 +38,11 @@ class Configurator:
               },
               'epic_id': "10008",
               'task_id': "10006",
-              'subtask_id': "10009"
+              'subtask_id': "10009",
+              'ready_for_work_status': "Selected for Development",
           },
           'NORTH': {
-              'bug_id': "10012",
-              'story_id': "10004",
-              'epic_id': "10000",
-              'task_id': "10010",
-              'subtask_id': "10011",
+              'ready_for_work_status': "Selected for Development",
               'bug': {'id': "10012"},
               'story': {'id': "10004", 'transition_list': {
                   "Backlog": {"id": "14", "name": "Backlog", "next": "Selected for Development"},
