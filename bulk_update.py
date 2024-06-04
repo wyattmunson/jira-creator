@@ -24,6 +24,8 @@ class BulkUpdater:
         # ticket_list = data_loader.get_tickets()
         ticket_list = api.get_issues(jql_query)
         self.tickets = ticket_list['issues']
+        
+        return self.tickets
     
     def get_transition_ids(self, issue_key=env_checker.find_flag("--issue-key")):
         # get the first ticket (all issues types in same project use common transition ids)

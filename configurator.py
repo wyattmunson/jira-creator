@@ -1,5 +1,9 @@
+import env_checker
+import logtastic as logg
+
 class Configurator:
     def __init__(self):
+      print("...Initializing: Config...")
       self.up = True
       self.project_list = ["FOX"]
       # self.project_list = ["FOX", "NORTH", "RED"]
@@ -73,3 +77,15 @@ class Configurator:
     
     def get_api_url(self):
         return self.jira_api_url
+    
+    def format_jql_query(self):
+        input_jql = env_checker.find_flag("--jql")
+        project_key = env_checker.find_flag("--project-key")
+        logg.er("DEBUG", f'Got project key: {project_key}')
+        
+        if not input_jql:
+            logg.er("DEBUG", f'Project key not supplied')
+            return f'project = "{project_key}" AND status != "Done" ORDER BY created DESC'
+        else:
+            logg.er("DEBUG", f'JQL provided via flag: {input_jql}')
+            return input_jql

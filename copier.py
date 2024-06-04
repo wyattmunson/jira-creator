@@ -1,6 +1,7 @@
 import env_checker
 import bulk_create
 import bulk_update
+import commits
 import sys
 import ver
 from base64 import b64encode
@@ -38,6 +39,7 @@ if __name__ == "__main__":
     # Check required env variables
     required_vars_list = ["JIRA_API_TOKEN", "JIRA_USERNAME"]
     env_checker.check_env_vars(required_vars_list)
+    arg_list = sys.argv
 
     if len(sys.argv) > 1:
         command = sys.argv[1]
@@ -50,6 +52,8 @@ if __name__ == "__main__":
             bulk_update_handler()
         if command == "get-transitions":
             get_transition_handler()
+        if command == "workflow":
+            commits.commit_maker_handler(arg_list)
         if command in ["version", "--version", "-v"]:
             get_version_handler()
     else:
