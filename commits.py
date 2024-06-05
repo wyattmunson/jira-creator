@@ -12,7 +12,12 @@ import helpers
 
 class GitManager:
     def __init__(self):
-        pass
+        self.username = envck.get_var_value("--git_username", "GIT_USERNAME", None, True)
+        self.code_pat = envck.get_var_value("--code-pat", "CODE_PAT", None, True)
+        self.project_key = envck.get_var_value("--project-key", "PROJECT_KEY", None, True)
+        self.repo_location = envck.get_var_value("--repo-location", "REPO_LOCATION", None, True)
+        self.clone_url = envck.get_var_value("--clone-url", "CLONE_URL", None, True)
+        self.total_commits = envck.get_var_value("--total-commits", "TOTAL_COMMITS", 5)
     
     def get_total_commits(self):
         self.total_commits = envck.get_var_value("--total-commits", "TOTAL_COMMITS", 5)
@@ -28,7 +33,7 @@ class GitManager:
         create_date = ticket['fields']['created']
         transition_date = ticket['fields']['statuscategorychangedate']
 
-        timestamp_list = get_timestamps(create_date, self.total_commits)
+        timestamp_list = helpers.get_timestamps(create_date, self.total_commits)
         return timestamp_list
     
     def make_code_change(self):
@@ -86,10 +91,13 @@ def handle_code_changes(repo_location, code_change_obj, timestamp_list):
     # code_change_obj = ""
     # commit_messages = data_commit_msg.get()
     
+    # checkout branch
+    
+    
     for x in timestamp_list:
         make_code_changes(repo_location, code_change_obj)
         
-        string_command = f'./git_commit.sh {repo_location} "{x}"'
+        string_command = f'./scripts/git_commit.sh {repo_location} "{x}"'
         subprocess.run(string_command, shell=True)
         
 
@@ -99,11 +107,6 @@ def set_git_creds(repo_location):
     pat = envck.get_var_value("--code-pat", "CODE_PAT", None)
     
     subprocess.run(f'./scripts/set_git_creds.sh {repo_location} {username} {pat}', shell=True)
-    
-    # akey = username + ":" + pat
-    # code_repo = "https://git.harness.io/MQGesbQCQ2WNqoJhvEsw1w/default/default_project/fake-commits.git"
-    # clone_url = code_repo.replace("https://", "https://" + akey)
-    # print("Using clone url", clone_url)
     
 
 def set_git_remote(repo_location, clone_url):
@@ -129,7 +132,11 @@ def push_commit_handler(repo_location, clone_url):
 def mock_selected_ticket():
     return {'expand': 'operations,versionedRepresentations,editmeta,changelog,customfield_10010.requestTypePractice,renderedFields', 'id': '10072', 'self': 'https://harness-sei.atlassian.net/rest/api/2/issue/10072', 'key': 'FOX-39', 'fields': {'statuscategorychangedate': '2024-06-02T00:21:40.209-0700', 'issuetype': {'self': 'https://harness-sei.atlassian.net/rest/api/2/issuetype/10005', 'id': '10005', 'description': 'Stories track functionality or features expressed as user goals.', 'iconUrl': 'https://harness-sei.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=medium', 'name': 'Story', 'subtask': False, 'avatarId': 10315, 'entityId': 'cd84c884-b6cd-4873-b8c7-afe4dd262b07', 'hierarchyLevel': 0}, 'timespent': None, 'customfield_10030': None, 'project': {'self': 'https://harness-sei.atlassian.net/rest/api/2/project/10001', 'id': '10001', 'key': 'FOX', 'name': 'Fox Team', 'projectTypeKey': 'software', 'simplified': True, 'avatarUrls': {'48x48': 'https://harness-sei.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10405', '24x24': 'https://harness-sei.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10405?size=small', '16x16': 'https://harness-sei.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10405?size=xsmall', '32x32': 'https://harness-sei.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10405?size=medium'}}, 'fixVersions': [], 'aggregatetimespent': None, 'resolution': None, 'customfield_10027': None, 'customfield_10028': None, 'customfield_10029': None, 'resolutiondate': None, 'workratio': -1, 'lastViewed': '2024-06-02T13:28:19.374-0700', 'watches': {'self': 'https://harness-sei.atlassian.net/rest/api/2/issue/FOX-39/watchers', 'watchCount': 1, 'isWatching': True}, 'created': '2024-06-01T23:41:26.894-0700', 'customfield_10020': None, 'customfield_10021': None, 'customfield_10022': None, 'customfield_10023': None, 'priority': {'self': 'https://harness-sei.atlassian.net/rest/api/2/priority/3', 'iconUrl': 'https://harness-sei.atlassian.net/images/icons/priorities/medium.svg', 'name': 'Medium', 'id': '3'}, 'customfield_10024': None, 'customfield_10025': None, 'customfield_10026': None, 'labels': [], 'customfield_10016': None, 'customfield_10017': None, 'customfield_10018': {'hasEpicLinkFieldDependency': False, 'showField': False, 'nonEditableReason': {'reason': 'PLUGIN_LICENSE_ERROR', 'message': 'The Parent Link is only available to Jira Premium users.'}}, 'customfield_10019': '0|i000bj:', 'timeestimate': None, 'aggregatetimeoriginalestimate': None, 'versions': [], 'issuelinks': [], 'assignee': None, 'updated': '2024-06-02T00:21:40.208-0700', 'status': {'self': 'https://harness-sei.atlassian.net/rest/api/2/status/10004', 'description': '', 'iconUrl': 'https://harness-sei.atlassian.net/', 'name': 'In Progress', 'id': '10004', 'statusCategory': {'self': 'https://harness-sei.atlassian.net/rest/api/2/statuscategory/4', 'id': 4, 'key': 'indeterminate', 'colorName': 'yellow', 'name': 'In Progress'}}, 'components': [], 'timeoriginalestimate': None, 'description': 'Buttons on the product listing page have inconsistent spacing, creating a misaligned layout on some screen sizes. (Priority: Low)', 'customfield_10010': None, 'customfield_10014': None, 'customfield_10015': None, 'customfield_10005': None, 'customfield_10006': None, 'customfield_10007': None, 'security': None, 'customfield_10008': None, 'customfield_10009': None, 'aggregatetimeestimate': None, 'summary': 'Fix Visual Bug: Inconsistent Button Spacing on Product Listing Page', 'creator': {'self': 'https://harness-sei.atlassian.net/rest/api/2/user?accountId=712020%3A1d5dd3c0-e762-4ab6-bf15-e1a5153e9897', 'accountId': '712020:1d5dd3c0-e762-4ab6-bf15-e1a5153e9897', 'emailAddress': 'wyatt@harness.io', 'avatarUrls': {'48x48': 'https://secure.gravatar.com/avatar/c6c429f0cce03fcfc529413e70a79734?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FWM-5.png', '24x24': 'https://secure.gravatar.com/avatar/c6c429f0cce03fcfc529413e70a79734?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FWM-5.png', '16x16': 'https://secure.gravatar.com/avatar/c6c429f0cce03fcfc529413e70a79734?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FWM-5.png', '32x32': 'https://secure.gravatar.com/avatar/c6c429f0cce03fcfc529413e70a79734?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FWM-5.png'}, 'displayName': 'Wyatt Munson', 'active': True, 'timeZone': 'America/Los_Angeles', 'accountType': 'atlassian'}, 'subtasks': [], 'reporter': {'self': 'https://harness-sei.atlassian.net/rest/api/2/user?accountId=712020%3A1d5dd3c0-e762-4ab6-bf15-e1a5153e9897', 'accountId': '712020:1d5dd3c0-e762-4ab6-bf15-e1a5153e9897', 'emailAddress': 'wyatt@harness.io', 'avatarUrls': {'48x48': 'https://secure.gravatar.com/avatar/c6c429f0cce03fcfc529413e70a79734?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FWM-5.png', '24x24': 'https://secure.gravatar.com/avatar/c6c429f0cce03fcfc529413e70a79734?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FWM-5.png', '16x16': 'https://secure.gravatar.com/avatar/c6c429f0cce03fcfc529413e70a79734?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FWM-5.png', '32x32': 'https://secure.gravatar.com/avatar/c6c429f0cce03fcfc529413e70a79734?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FWM-5.png'}, 'displayName': 'Wyatt Munson', 'active': True, 'timeZone': 'America/Los_Angeles', 'accountType': 'atlassian'}, 'aggregateprogress': {'progress': 0, 'total': 0}, 'customfield_10001': None, 'customfield_10002': None, 'customfield_10003': None, 'customfield_10004': None, 'environment': None, 'duedate': None, 'progress': {'progress': 0, 'total': 0}, 'votes': {'self': 'https://harness-sei.atlassian.net/rest/api/2/issue/FOX-39/votes', 'votes': 0, 'hasVoted': False}}}
     
-    
+
+def generate_branch_name(ticket):
+    return f'{ticket['id']-{random.randint(300, 800)}}'
+
+
 def commit_workflow():
     print("............Starting commit workflow............")
     bu = bulk()

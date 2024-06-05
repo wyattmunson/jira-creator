@@ -1,0 +1,87 @@
+{
+  "name": "Test_WfP",
+  "default_config": false,
+  "fixed_stages": [
+    {
+      "order": 0,
+      "name": "Lead time to First Commit",
+      "event": { "any_label_added": false, "type": "SCM_COMMIT_CREATED" },
+      "lower_limit_value": 864000,
+      "upper_limit_value": 2592000,
+      "lower_limit_unit": "SECONDS",
+      "upper_limit_unit": "SECONDS"
+    },
+    {
+      "order": 1,
+      "name": "PR Creation Time",
+      "event": { "any_label_added": false, "type": "SCM_PR_CREATED" },
+      "lower_limit_value": 864000,
+      "upper_limit_value": 2592000,
+      "lower_limit_unit": "SECONDS",
+      "upper_limit_unit": "SECONDS"
+    },
+    {
+      "order": 2,
+      "name": "Time to Comment",
+      "event": { "any_label_added": false, "type": "SCM_PR_REVIEW_STARTED" },
+      "lower_limit_value": 864000,
+      "upper_limit_value": 2592000,
+      "lower_limit_unit": "SECONDS",
+      "upper_limit_unit": "SECONDS"
+    },
+    {
+      "order": 3,
+      "name": "Approval Time",
+      "event": {
+        "any_label_added": false,
+        "type": "SCM_PR_APPROVED",
+        "params": { "last_approval": ["true"] }
+      },
+      "lower_limit_value": 864000,
+      "upper_limit_value": 2592000,
+      "lower_limit_unit": "SECONDS",
+      "upper_limit_unit": "SECONDS"
+    },
+    {
+      "order": 4,
+      "name": "Merge Time",
+      "event": { "any_label_added": false, "type": "SCM_PR_MERGED" },
+      "lower_limit_value": 864000,
+      "upper_limit_value": 2592000,
+      "lower_limit_unit": "SECONDS",
+      "upper_limit_unit": "SECONDS"
+    }
+  ],
+  "issue_management_integrations": ["jira"],
+  "scm_config": {
+    "release": {
+      "source_branch": { "$begins": ["release"] },
+      "target_branch": { "$begins": ["release"] },
+      "commit_branch": { "$begins": ["release"] },
+      "tags": { "$begins": ["release"] },
+      "labels": { "$begins": ["release"] }
+    },
+    "deployment": {
+      "source_branch": { "$begins": ["deploy"] },
+      "target_branch": { "$begins": ["deploy"] },
+      "commit_branch": { "$begins": ["deploy"] },
+      "tags": { "$begins": ["deploy"] },
+      "labels": { "$begins": ["deploy"] }
+    },
+    "hotfix": {
+      "source_branch": { "$begins": ["hotfix", "hf"] },
+      "target_branch": { "$begins": ["hotfix", "hf"] },
+      "commit_branch": { "$begins": ["hotfix", "hf"] },
+      "tags": { "$begins": ["hotfix", "hf"] },
+      "labels": { "$begins": ["hotfix", "hf"] }
+    },
+    "defect": {
+      "source_branch": { "$begins": ["bugfix", "fix", "bug"] },
+      "target_branch": { "$begins": ["bugfix", "fix", "bug"] },
+      "commit_branch": { "$begins": ["bugfix", "fix", "bug"] },
+      "tags": { "$begins": ["bugfix", "fix", "bug"] },
+      "labels": { "$begins": ["bugfix", "fix", "bug"] }
+    }
+  },
+  "jira_only": false
+}
