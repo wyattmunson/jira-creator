@@ -123,10 +123,10 @@ def set_git_remote(repo_location, clone_url):
     url = f'https://$PAT@github.com/<username>/<repository>.git'
     
 
-def push_commit_handler(repo_location, clone_url):
+def push_commit_handler(repo_location, branch_name="main"):
     print("...Push commits...")
-    logg.er("DEBUG", f'Cloning at repo path "{repo_location}" with clone URL "{clone_url}"')
-    subprocess.run(f'./scripts/push_commits.sh {repo_location} {clone_url}', shell=True)
+    logg.er("DEBUG", f'Using branch "{branch_name}"')
+    subprocess.run(f'./scripts/push_commits.sh {repo_location} {branch_name}', shell=True)
 
 
 def mock_selected_ticket():
@@ -134,7 +134,19 @@ def mock_selected_ticket():
     
 
 def generate_branch_name(ticket):
-    return f'{ticket['id']-{random.randint(300, 800)}}'
+    if not ticket: return f'random-branch-{random.randint(1000, 9999)}'
+    # print(ticket)
+    issue_key = ticket['key']
+    print("Issue us", issue_key)
+    return f'{ticket["key"]}-generated-branch-{random.randint(300, 800)}'
+
+
+def handle_change_branch(repo_location, ticket):
+    print("...Changing branch...")
+    branch_name = generate_branch_name(ticket)
+    subprocess.run(f'./scripts/git_checkout.sh {repo_location} {branch_name}', shell=True)
+    return branch_name
+
 
 
 def commit_workflow():
@@ -154,6 +166,7 @@ def commit_workflow():
     # selected_ticket = random.choice(tickets)
     selected_ticket = mock_selected_ticket()
     
+    
     # GET TOTAL COMMITS and REPO LOCATION 
     
     # GET: total number of commits to make
@@ -171,6 +184,10 @@ def commit_workflow():
     timestamp_list = helpers.get_timestamps(create_date, total_commits)
     # print("Generated timestamps:", timestamp_list)
     
+    # CHECKOUT BRANCH
+    source_branch = handle_change_branch(repo_location, selected_ticket)
+    logg.er("DEBUG", f'Changed to branch {source_branch}')
+    
     # # MAKE CODE CHANGE
     code_change_obj = data_commit_msg.get()
     handle_code_changes(repo_location, code_change_obj, timestamp_list)
@@ -180,7 +197,7 @@ def commit_workflow():
     set_git_remote(repo_location, clone_url)
     
     # PUSH TO CODE REPO
-    push_commit_handler(repo_location, None)
+    push_commit_handler(repo_location, source_branch)
     
     # OPEN PR
     
